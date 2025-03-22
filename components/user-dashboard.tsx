@@ -6,8 +6,22 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/context/auth-context"
-import { PlayIcon, HeartIcon, TrendingUpIcon, WalletIcon, Loader2Icon } from "lucide-react"
+import { 
+  PlayIcon, 
+  HeartIcon, 
+  TrendingUpIcon, 
+  WalletIcon, 
+  Loader2Icon, 
+  MusicIcon, 
+  PlusCircleIcon,
+  SparklesIcon,
+  ListMusicIcon,
+  DiscIcon
+} from "lucide-react"
 import { ArtistCard } from "@/components/artist-card"
 import { RecommendedTracks } from "@/components/recommended-tracks"
 import { SpotifyTrackList } from "@/components/spotify-track-list"
@@ -31,6 +45,10 @@ export function UserDashboard() {
     { id: "2", name: "Digital Dreamers", genre: "Ambient", image: "/placeholder.svg?height=300&width=300" },
     { id: "3", name: "Blockchain Beats", genre: "Hip Hop", image: "/placeholder.svg?height=300&width=300" },
     { id: "4", name: "Crypto Collective", genre: "Jazz", image: "/placeholder.svg?height=300&width=300" },
+    { id: "5", name: "NFT Noise", genre: "Experimental", image: "/placeholder.svg?height=300&width=300" },
+    { id: "6", name: "Token Tunes", genre: "Chill", image: "/placeholder.svg?height=300&width=300" },
+    { id: "7", name: "Decentralized DJs", genre: "House", image: "/placeholder.svg?height=300&width=300" },
+    { id: "8", name: "Web3 Waves", genre: "Techno", image: "/placeholder.svg?height=300&width=300" },
   ]
 
   useEffect(() => {
@@ -79,64 +97,123 @@ export function UserDashboard() {
     fetchData()
   }, [user])
 
-  return (
-    <div className="space-y-6 pb-16">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Welcome back, {user?.name}</h1>
-          <p className="text-muted-foreground">Discover, collect, and enjoy music on the blockchain</p>
+  const LoadingSkeleton = () => (
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="space-y-2">
+            <Skeleton className="h-40 w-full rounded-md" />
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-3 w-1/2" />
+          </div>
+        ))}
+      </div>
+      
+      <div className="space-y-2">
+        <Skeleton className="h-6 w-48" />
+        <div className="flex gap-4 overflow-hidden">
+          {[1, 2, 3, 4,5,6,7,8].map((i) => (
+            <Skeleton key={i} className="h-32 w-32 rounded-md flex-shrink-0" />
+          ))}
         </div>
-        <Link href="/dashboard/marketplace">
-          <Button>Browse Marketplace</Button>
-        </Link>
+      </div>
+    </div>
+  )
+
+  return (
+    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 space-y-8 pb-16">
+      {/* Hero section */}
+      <div className="relative bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-6 md:p-8 mb-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight mb-2">
+              Welcome back, <span className="text-primary">{user?.name}</span>
+            </h1>
+            <p className="text-muted-foreground max-w-lg">
+              Discover, collect, and enjoy music on the blockchain. Your personal music NFT experience starts here.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Link href="/dashboard/marketplace">
+              <Button className="gap-2">
+                <SparklesIcon className="h-4 w-4" />
+                Browse Marketplace
+              </Button>
+            </Link>
+            <Button variant="outline" className="gap-2">
+              <PlusCircleIcon className="h-4 w-4" />
+              Create Collection
+            </Button>
+          </div>
+        </div>
       </div>
 
-      {error && <div className="bg-destructive/15 text-destructive text-sm p-3 rounded-md">{error}</div>}
+      {error && (
+        <div className="bg-destructive/15 text-destructive text-sm p-4 rounded-lg border border-destructive/20 flex items-center">
+          <span className="mr-2">⚠️</span>
+          {error}
+        </div>
+      )}
 
       {isLoading ? (
-        <div className="flex justify-center py-12">
-          <Loader2Icon className="h-8 w-8 animate-spin text-primary" />
+        <div className="space-y-8">
+          <LoadingSkeleton />
         </div>
       ) : (
-        <Tabs defaultValue="discover" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="discover">Discover</TabsTrigger>
-            <TabsTrigger value="recommended">Recommended</TabsTrigger>
-            <TabsTrigger value="collection">My Collection</TabsTrigger>
-          </TabsList>
+        <Tabs defaultValue="discover" value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <div className="bg-background sticky top-0 z-10 pt-2 pb-4 backdrop-blur-sm">
+            <TabsList className="grid w-full grid-cols-3 h-12">
+              <TabsTrigger value="discover" className="flex items-center gap-2">
+                <DiscIcon className="h-4 w-4" />
+                <span>Discover</span>
+              </TabsTrigger>
+              <TabsTrigger value="recommended" className="flex items-center gap-2">
+                <SparklesIcon className="h-4 w-4" />
+                <span>Recommended</span>
+              </TabsTrigger>
+              <TabsTrigger value="collection" className="flex items-center gap-2">
+                <ListMusicIcon className="h-4 w-4" />
+                <span>My Collection</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
-          <TabsContent value="discover" className="space-y-6">
-            <div>
+          <TabsContent value="discover" className="space-y-8 mt-2">
+            {/* Featured Artists */}
+            <section>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold">Featured Artists</h2>
-                <Link href="/dashboard/artists" className="text-primary text-sm hover:underline">
-                  View all
+                <h2 className="text-2xl font-bold flex items-center gap-2">
+                  <MusicIcon className="h-5 w-5 text-primary" />
+                  Featured Artists
+                </h2>
+                <Link href="/dashboard/artists" className="text-primary text-sm font-medium hover:underline">
+                  View all artists
                 </Link>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
                 {featuredArtists.map((artist) => (
                   <ArtistCard key={artist.id} artist={artist} />
                 ))}
               </div>
-            </div>
+            </section>
 
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold">New Releases</h2>
-                <Link href="/dashboard/browse" className="text-primary text-sm hover:underline">
-                  View all
-                </Link>
-              </div>
+            {/* New Releases */}
+            <section>
               <ScrollArea className="w-full whitespace-nowrap pb-4">
-                <div className="flex gap-4">
+                <div className="flex gap-6">
                   {newReleases.map((album) => (
-                    <div key={album.id} className="w-[200px] flex-shrink-0">
-                      <div className="aspect-square rounded-md overflow-hidden mb-2">
+                    <div key={album.id} className="w-[200px] flex-shrink-0 group">
+                      <div className="aspect-square rounded-xl overflow-hidden mb-3 relative group">
                         <img
                           src={album.images[0]?.url || "/placeholder.svg?height=200&width=200"}
                           alt={album.name}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover transition-transform group-hover:scale-105"
                         />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <Button size="icon" variant="secondary" className="h-10 w-10 rounded-full">
+                            <PlayIcon className="h-5 w-5" />
+                          </Button>
+                        </div>
                       </div>
                       <div className="font-medium truncate">{album.name}</div>
                       <div className="text-sm text-muted-foreground truncate">
@@ -147,153 +224,84 @@ export function UserDashboard() {
                 </div>
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
-            </div>
+            </section>
 
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold">Featured Playlists</h2>
-                <Link href="/dashboard/playlists" className="text-primary text-sm hover:underline">
-                  View all
-                </Link>
-              </div>
-              <ScrollArea className="w-full whitespace-nowrap pb-4">
-                <div className="flex gap-4">
-                  {featuredPlaylists.map((playlist) => (
-                    <div key={playlist.id} className="w-[200px] flex-shrink-0">
-                      <div className="aspect-square rounded-md overflow-hidden mb-2">
-                        <img
-                          src={playlist.images[0]?.url || "/placeholder.svg?height=200&width=200"}
-                          alt={playlist.name}
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                      <div className="font-medium truncate">{playlist.name}</div>
-                      <div className="text-sm text-muted-foreground truncate">By {playlist.owner.display_name}</div>
-                    </div>
-                  ))}
-                </div>
-                <ScrollBar orientation="horizontal" />
-              </ScrollArea>
-            </div>
+            {/* Featured Playlists */}
+            
 
+            {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingUpIcon className="h-5 w-5 text-primary" />
-                    Top Charts
-                  </CardTitle>
-                  <CardDescription>The most popular tracks this week</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-4">
-                    {newReleases.slice(0, 4).map((album, index) => (
-                      <li key={album.id} className="flex items-center gap-3">
-                        <span className="font-bold text-muted-foreground w-5">{index + 1}</span>
-                        <img
-                          src={album.images[0]?.url || "/placeholder.svg?height=40&width=40"}
-                          alt={album.name}
-                          className="h-10 w-10 rounded object-cover"
-                        />
-                        <div className="min-w-0 flex-1">
-                          <div className="font-medium truncate">{album.name}</div>
-                          <div className="text-sm text-muted-foreground truncate">
-                            {album.artists.map((a: any) => a.name).join(", ")}
-                          </div>
-                        </div>
-                        <Button variant="ghost" size="icon" className="ml-auto">
-                          <PlayIcon className="h-4 w-4" />
-                        </Button>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" className="w-full">
-                    View All Charts
-                  </Button>
-                </CardFooter>
-              </Card>
+              {/* Top Charts */}
+              
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <HeartIcon className="h-5 w-5 text-primary" />
-                    Recently Played
-                  </CardTitle>
-                  <CardDescription>Your listening history</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {listeningHistory.length > 0 ? (
-                    <ul className="space-y-4">
-                      {listeningHistory.slice(0, 4).map((track) => (
-                        <li key={track.id} className="flex items-center gap-3">
-                          <img
-                            src={track.albumCover || "/placeholder.svg?height=40&width=40"}
-                            alt={track.name}
-                            className="h-10 w-10 rounded object-cover"
-                          />
-                          <div className="min-w-0 flex-1">
-                            <div className="font-medium truncate">{track.name}</div>
-                            <div className="text-sm text-muted-foreground truncate">{track.artist}</div>
-                          </div>
-                          <Button variant="ghost" size="icon" className="ml-auto">
-                            <PlayIcon className="h-4 w-4" />
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <div className="text-center py-4 text-muted-foreground">No listening history yet</div>
-                  )}
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" className="w-full">
-                    View History
-                  </Button>
-                </CardFooter>
-              </Card>
+             
             </div>
           </TabsContent>
 
-          <TabsContent value="recommended" className="space-y-6">
+          <TabsContent value="recommended" className="space-y-6 mt-2">
             {recommendations.length > 0 ? (
               <SpotifyTrackList tracks={recommendations} title="Recommended For You" />
             ) : (
-              <RecommendedTracks />
+              <div className="bg-gradient-to-r from-secondary/20 to-primary/20 rounded-xl p-8 text-center">
+                <div className="mx-auto w-16 h-16 rounded-full bg-background flex items-center justify-center mb-4">
+                  <SparklesIcon className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Personalized Recommendations</h3>
+                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                  Start exploring music to get personalized recommendations based on your taste
+                </p>
+                <Button onClick={() => setActiveTab("discover")}>Discover Music</Button>
+              </div>
             )}
           </TabsContent>
 
-          <TabsContent value="collection" className="space-y-6">
+          <TabsContent value="collection" className="space-y-6 mt-2">
             {favorites.length > 0 ? (
-              <div className="space-y-6">
-                <h2 className="text-2xl font-bold">Your Favorites</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {favorites.map((track) => (
-                    <div key={track.id} className="flex flex-col">
-                      <div className="aspect-square rounded-md overflow-hidden mb-2">
-                        <img
-                          src={track.albumCover || "/placeholder.svg?height=200&width=200"}
-                          alt={track.name}
-                          className="h-full w-full object-cover"
-                        />
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <HeartIcon className="h-5 w-5 text-primary" />
+                    Your Favorites
+                  </h2>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+                    {favorites.map((track) => (
+                      <div key={track.id} className="flex flex-col group">
+                        <div className="aspect-square rounded-xl overflow-hidden mb-3 relative">
+                          <img
+                            src={track.albumCover || "/placeholder.svg?height=200&width=200"}
+                            alt={track.name}
+                            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <Button size="icon" variant="secondary" className="h-10 w-10 rounded-full">
+                              <PlayIcon className="h-5 w-5" />
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="font-medium truncate">{track.name}</div>
+                        <div className="text-sm text-muted-foreground truncate">{track.artist}</div>
                       </div>
-                      <div className="font-medium truncate">{track.name}</div>
-                      <div className="text-sm text-muted-foreground truncate">{track.artist}</div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             ) : (
-              <div className="rounded-lg border bg-card text-card-foreground p-8 text-center">
-                <div className="mx-auto w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-                  <WalletIcon className="h-8 w-8 text-muted-foreground" />
+              <div className="rounded-xl border bg-gradient-to-r from-muted/50 to-background p-8 text-center">
+                <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <WalletIcon className="h-8 w-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Your collection is empty</h3>
-                <p className="text-muted-foreground mb-4">Start collecting music NFTs to build your personal library</p>
-                <Button asChild>
-                  <Link href="/dashboard/marketplace">Browse Marketplace</Link>
-                </Button>
+                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                  Start collecting music NFTs to build your personal library and enjoy exclusive content
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button asChild>
+                    <Link href="/dashboard/marketplace">Browse Marketplace</Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <Link href="/dashboard/discover">Explore Trending</Link>
+                  </Button>
+                </div>
               </div>
             )}
           </TabsContent>
@@ -302,4 +310,3 @@ export function UserDashboard() {
     </div>
   )
 }
-
