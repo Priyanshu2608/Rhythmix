@@ -16,23 +16,23 @@ export default function MarketplacePage() {
   const nfts = [
     {
       id: "1",
-      title: "Ethereal Dreams",
-      artist: "Cosmic Harmony",
-      cover: "/placeholder.svg?height=300&width=300",
+      title: "Ajab Si",
+      artist: "Vishal-Shekhar",
+      cover: "https://i.scdn.co/image/ab67616d0000b273675b3f7dea80153c73581e5e",
       price: "0.05 ETH",
     },
     {
       id: "2",
-      title: "Digital Horizon",
-      artist: "Blockchain Beats",
-      cover: "/placeholder.svg?height=300&width=300",
+      title: "Tumse Milke Dil Ka",
+      artist: "Sonu Nigam",
+      cover: "https://i.scdn.co/image/ab67616d0000b273e7fa423de639247fed12be4a",
       price: "0.03 ETH",
     },
     {
       id: "3",
-      title: "Crypto Sunrise",
-      artist: "Digital Dreamers",
-      cover: "/placeholder.svg?height=300&width=300",
+      title: "Pehli Baar",
+      artist: "Ajay Gogavale",
+      cover: "https://i.scdn.co/image/ab67616d0000b273757a24699f13a78d2d207aa8",
       price: "0.02 ETH",
     },
     {
