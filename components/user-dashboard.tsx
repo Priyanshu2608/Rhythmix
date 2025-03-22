@@ -1,5 +1,6 @@
 "use client"
 
+import { SONGS } from "@/constants/playlist_tracks";
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -10,13 +11,13 @@ import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/context/auth-context"
-import { 
-  PlayIcon, 
-  HeartIcon, 
-  TrendingUpIcon, 
-  WalletIcon, 
-  Loader2Icon, 
-  MusicIcon, 
+import {
+  PlayIcon,
+  HeartIcon,
+  TrendingUpIcon,
+  WalletIcon,
+  Loader2Icon,
+  MusicIcon,
   PlusCircleIcon,
   SparklesIcon,
   ListMusicIcon,
@@ -108,11 +109,11 @@ export function UserDashboard() {
           </div>
         ))}
       </div>
-      
+
       <div className="space-y-2">
         <Skeleton className="h-6 w-48" />
         <div className="flex gap-4 overflow-hidden">
-          {[1, 2, 3, 4,5,6,7,8].map((i) => (
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
             <Skeleton key={i} className="h-32 w-32 rounded-md flex-shrink-0" />
           ))}
         </div>
@@ -191,10 +192,21 @@ export function UserDashboard() {
                 </Link>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
-                {featuredArtists.map((artist) => (
-                  <ArtistCard key={artist.id} artist={artist} />
-                ))}
+                {SONGS.map((song) =>
+                  song.artists.map((artist, index) => (
+                    <ArtistCard
+                      key={`${song.rank}-${index}`}
+                      artist={{
+                        id: song.rank,
+                        name: artist.name,
+                        genre: song.track_name,
+                        image: artist.image,
+                      }}
+                    />
+                  ))
+                )}
               </div>
+
             </section>
 
             {/* New Releases */}
@@ -227,14 +239,14 @@ export function UserDashboard() {
             </section>
 
             {/* Featured Playlists */}
-            
+
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Top Charts */}
-              
 
-             
+
+
             </div>
           </TabsContent>
 
