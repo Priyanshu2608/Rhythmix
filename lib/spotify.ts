@@ -157,3 +157,5 @@ export async function getRecommendations(
 export async function getGenreSeeds(): Promise<any> {
   return spotifyFetch("/recommendations/available-genre-seeds");
 }
+
+
