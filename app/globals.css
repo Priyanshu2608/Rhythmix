@@ -30,7 +30,8 @@
     --chart-4: 40 80% 50%;
     --chart-5: 120 80% 50%;
   }
-
+  
+  
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
