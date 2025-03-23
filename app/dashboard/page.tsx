@@ -1,184 +1,168 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { useSpotifyAuth } from "@/hooks/use-spotify-auth";
-import { getUserProfile, getUserPlaylists } from "@/lib/spotify";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
-import { FaMusic, FaSpotify } from "react-icons/fa";
+import { useState, useEffect } from "react"
+import { Music, Upload, BarChart3, Users, DollarSign } from "lucide-react"
+import Link from "next/link"
+import Image from "next/image"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 export default function DashboardPage() {
-  const { accessToken, isLoading: authLoading, error: authError } = useSpotifyAuth();
-  const [user, setUser] = useState<any>(null);
-  const [playlists, setPlaylists] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [debugInfo, setDebugInfo] = useState<any>({});
+  const [uploadedMusic, setUploadedMusic] = useState([])
+  const [uploadCount, setUploadCount] = useState(0)
 
+  // Fetch uploaded music from localStorage (for demo purposes)
   useEffect(() => {
-    // Debug info
-    console.log("Auth state:", { accessToken, authLoading, authError });
-    setDebugInfo(prev => ({ ...prev, auth: { accessToken: !!accessToken, authLoading, authError } }));
-    
-    if (!accessToken) return;
+    const storedUploads = JSON.parse(localStorage.getItem("userUploads") || "[]")
+    setUploadedMusic(storedUploads)
 
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        console.log("Fetching data with token:", accessToken);
-        
-        // Fetch user profile
-        console.log("Fetching user profile...");
-        const userResponse = await getUserProfile(accessToken);
-        console.log("User profile response:", userResponse.status);
-        
-        if (!userResponse.ok) {
-          const errorText = await userResponse.text();
-          console.error("User profile error:", errorText);
-          throw new Error(`Failed to fetch user profile: ${userResponse.status} ${errorText}`);
-        }
-        
-        const userData = await userResponse.json();
-        console.log("User data:", userData);
-        setUser(userData);
-        setDebugInfo(prev => ({ ...prev, user: userData }));
-        
-        // Fetch user playlists
-        console.log("Fetching playlists...");
-        const playlistsResponse = await getUserPlaylists(accessToken);
-        console.log("Playlists response:", playlistsResponse.status);
-        
-        if (!playlistsResponse.ok) {
-          const errorText = await playlistsResponse.text();
-          console.error("Playlists error:", errorText);
-          throw new Error(`Failed to fetch playlists: ${playlistsResponse.status} ${errorText}`);
-        }
-        
-        const playlistsData = await playlistsResponse.json();
-        console.log("Playlists data:", playlistsData);
-        setPlaylists(playlistsData.items || []);
-        setDebugInfo(prev => ({ ...prev, playlists: playlistsData }));
-        
-      } catch (err) {
-        console.error("Error fetching data:", err);
-        setError(err instanceof Error ? err.message : "Failed to load data");
-        setDebugInfo(prev => ({ ...prev, error: err instanceof Error ? err.message : "Failed to load data" }));
-      } finally {
-        setIsLoading(false);
+    const storedCount = Number.parseInt(localStorage.getItem("uploadCount") || "0")
+    setUploadCount(storedCount)
+
+    // Set up an interval to check for updates (for demo purposes)
+    const interval = setInterval(() => {
+      const updatedUploads = JSON.parse(localStorage.getItem("userUploads") || "[]")
+      const updatedCount = Number.parseInt(localStorage.getItem("uploadCount") || "0")
+
+      if (updatedUploads.length !== uploadedMusic.length) {
+        setUploadedMusic(updatedUploads)
       }
-    };
 
-    fetchData();
-  }, [accessToken, authLoading, authError]);
+      if (updatedCount !== uploadCount) {
+        setUploadCount(updatedCount)
+      }
+    }, 2000)
 
-  // Show debug information
-  if (authLoading || isLoading) {
-    return (
-      <div className="container mx-auto p-4 space-y-6">
-        <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
-          <p className="font-bold">Loading State</p>
-          <p>Auth Loading: {String(authLoading)}</p>
-          <p>Data Loading: {String(isLoading)}</p>
-          <p>Has Token: {accessToken ? "Yes" : "No"}</p>
-        </div>
-        
-        <Skeleton className="h-12 w-[250px]" />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array(6).fill(0).map((_, i) => (
-            <Skeleton key={i} className="h-[200px] rounded-lg" />
-          ))}
-        </div>
-      </div>
-    );
-  }
+    return () => clearInterval(interval)
+  }, [uploadCount, uploadedMusic.length])
 
-  if (authError || error) {
-    return (
-      <div className="container mx-auto p-4">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          <p className="font-bold">Error</p>
-          <p>Auth Error: {authError || "None"}</p>
-          <p>Data Error: {error || "None"}</p>
-          <p>Has Token: {accessToken ? "Yes" : "No"}</p>
-          <pre className="mt-2 text-xs overflow-auto max-h-40">
-            {JSON.stringify(debugInfo, null, 2)}
-          </pre>
-        </div>
-        
+  return (
+    <div className="space-y-6">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
-          <CardContent className="flex flex-col items-center justify-center p-6">
-            <FaSpotify className="h-16 w-16 text-green-500 mb-4" />
-            <h2 className="text-2xl font-bold mb-2">Authentication Required</h2>
-            <p className="text-muted-foreground mb-4 text-center">
-              Please log in with your Spotify account to access your music library.
-            </p>
-            <Link href="/login">
-              <Button>Log in with Spotify</Button>
-            </Link>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Uploads</CardTitle>
+            <Upload className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{uploadCount}</div>
+            <p className="text-xs text-muted-foreground">+{uploadCount > 0 ? 1 : 0} from last month</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Streams</CardTitle>
+            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">2,664</div>
+            <p className="text-xs text-muted-foreground">+12.5% from last month</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Followers</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">142</div>
+            <p className="text-xs text-muted-foreground">+24% from last month</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">$1,234</div>
+            <p className="text-xs text-muted-foreground">+18.2% from last month</p>
           </CardContent>
         </Card>
       </div>
-    );
-  }
 
-  return (
-    <div className="container mx-auto p-4 space-y-6">
-      
-      
-      {user && (
-        <div className="flex items-center gap-4 mb-6">
-          <div className="h-16 w-16 rounded-full overflow-hidden">
-            <img 
-              src={user.images?.[0]?.url || "/placeholder-user.jpg"} 
-              alt={user.display_name} 
-              className="h-full w-full object-cover"
-            />
-          </div>
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">{user.display_name}</h1>
-            <p className="text-muted-foreground">{user.email}</p>
+            <CardTitle>My Music Library</CardTitle>
+            <CardDescription>Manage your uploaded music NFTs</CardDescription>
           </div>
-        </div>
-      )}
+          <div className="flex gap-2">
+            <Button variant="outline" asChild>
+              <Link href="/dashboard/profile">View All</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/dashboard/upload">Upload New</Link>
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {uploadedMusic.length > 0 ? (
+              <div className="rounded-md border">
+                <div className="grid grid-cols-12 p-4 text-sm font-medium text-muted-foreground">
+                  <div className="col-span-5">Track</div>
+                  <div className="col-span-2">Uploaded</div>
+                  <div className="col-span-2 text-right">Price</div>
+                  <div className="col-span-2 text-right">Status</div>
+                  <div className="col-span-1"></div>
+                </div>
 
-      <section>
-        <h2 className="text-xl font-semibold mb-4">Your Playlists</h2>
-        {playlists.length === 0 ? (
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center p-6">
-              <FaMusic className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-medium mb-2">No playlists found</h3>
-              <p className="text-muted-foreground text-center">
-                You don't have any playlists on Spotify yet.
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {playlists.map((playlist) => (
-              <Link key={playlist.id} href={`/dashboard/playlists/${playlist.id}`}>
-                <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
-                  <div className="aspect-square w-full overflow-hidden">
-                    <img 
-                      src={playlist.images?.[0]?.url || "/placeholder.svg"} 
-                      alt={playlist.name} 
-                      className="h-full w-full object-cover"
-                    />
+                {uploadedMusic.map((track) => (
+                  <div
+                    key={track.id}
+                    className="grid grid-cols-12 items-center p-4 hover:bg-muted/50 transition-colors border-t"
+                  >
+                    <div className="col-span-5 flex items-center gap-4">
+                      <div className="relative w-10 h-10 rounded overflow-hidden">
+                        <Image
+                          src={track.coverImage || "/placeholder.svg"}
+                          alt={track.title}
+                          width={40}
+                          height={40}
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <div className="font-medium">{track.title}</div>
+                        <div className="text-sm text-muted-foreground truncate max-w-[200px]">
+                          {track.description || "No description"}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-span-2 text-sm">{track.uploadDate}</div>
+                    <div className="col-span-2 text-right text-sm">{track.price} ETH</div>
+                    <div className="col-span-2 text-right">
+                      <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                        Minted
+                      </span>
+                    </div>
+                    <div className="col-span-1 flex justify-end">
+                      <Button variant="ghost" size="sm" asChild>
+                        <Link href={`/dashboard/marketplace?id=${track.id}`}>View</Link>
+                      </Button>
+                    </div>
                   </div>
-                  <CardHeader className="p-4">
-                    <CardTitle className="line-clamp-1">{playlist.name}</CardTitle>
-                    <CardDescription className="line-clamp-2">
-                      {playlist.description || `${playlist.tracks.total} tracks`}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-              </Link>
-            ))}
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <Music className="mx-auto h-12 w-12 text-muted-foreground" />
+                <h3 className="mt-4 text-lg font-medium">Your library is empty</h3>
+                <p className="text-muted-foreground">Upload your first track to get started</p>
+                <Button asChild className="mt-4">
+                  <Link href="/dashboard/upload">Upload Music</Link>
+                </Button>
+              </div>
+            )}
           </div>
-        )}
-      </section>
+        </CardContent>
+      </Card>
     </div>
-  );
+  )
 }
+

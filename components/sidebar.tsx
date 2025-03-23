@@ -85,7 +85,7 @@ export function Sidebar({ className }: SidebarProps) {
 
   const artistRoutes = [
     {
-      label: "Upload Music",
+      label: "NFT",
       icon: UploadIcon,
       href: "/dashboard/upload",
       active: pathname === "/dashboard/upload",
@@ -112,12 +112,7 @@ export function Sidebar({ className }: SidebarProps) {
       href: "/dashboard/marketplace",
       active: pathname === "/dashboard/marketplace",
     },
-    {
-      label: "Settings",
-      icon: SettingsIcon,
-      href: "/dashboard/settings",
-      active: pathname === "/dashboard/settings",
-    },
+   
   ]
 
   const onNavigation = () => {
@@ -292,7 +287,7 @@ export function Sidebar({ className }: SidebarProps) {
                       className="h-10 w-10 rounded-md" 
                       asChild
                     >
-                      <Link href="/dashboard/create-nft">
+                      <Link href="/dashboard/marketplace">
                         <PlusCircleIcon className="h-5 w-5" />
                       </Link>
                     </Button>
@@ -306,7 +301,7 @@ export function Sidebar({ className }: SidebarProps) {
                 className="w-full justify-start gap-2 bg-primary/5" 
                 asChild
               >
-                <Link href="/dashboard/create-nft">
+                <Link href="/dashboard/marketplace">
                   <PlusCircleIcon className="h-5 w-5" />
                   Create NFT
                 </Link>

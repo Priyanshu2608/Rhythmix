@@ -29,9 +29,9 @@ export function MusicPlayer() {
 
   // Mock current song data
   const currentSong = {
-    title: "Ethereal Dreams",
-    artist: "Cosmic Harmony",
-    cover: "/placeholder.svg?height=60&width=60",
+    title: "Afsos",
+    artist: "Anuv Jain, AP Dhillon",
+    cover: "https://i.ytimg.com/vi/2FhgKp_lfJQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCeQBJFUWZgjYrTQtnTdiO0hMCEzw",
   }
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
