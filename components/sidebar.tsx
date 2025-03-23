@@ -112,12 +112,7 @@ export function Sidebar({ className }: SidebarProps) {
       href: "/dashboard/marketplace",
       active: pathname === "/dashboard/marketplace",
     },
-    {
-      label: "Settings",
-      icon: SettingsIcon,
-      href: "/dashboard/settings",
-      active: pathname === "/dashboard/settings",
-    },
+   
   ]
 
   const onNavigation = () => {

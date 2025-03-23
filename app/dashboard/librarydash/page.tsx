@@ -58,50 +58,50 @@ const Library: NextPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [currentSong, setCurrentSong] = useState<Song>({
     id: '1',
-    title: 'Ethereal Dreams',
-    artist: 'Cosmic Harmony',
-    album: 'Celestial Journey',
-    imageUrl: 'https://c.saavncdn.com/890/Excuses-English-2021-20210930112054-500x500.jpg',
-    duration: '3:45',
+    title: 'Excuses',
+    artist: 'AP Dhillon, Gurinder Gill',
+    album: 'Hidden Gems',
+    imageUrl: '/album-covers/excuses.jpg',
+    duration: '2:56',
     isNFT: true
   });
   
-  // Sample data
+  // Sample data with Hindi and Punjabi songs
   const recentlyPlayed: Song[] = [
     {
       id: '1',
       title: 'Excuses',
-      artist: 'AP Dhillon',
-      album: 'Excuses',
+      artist: 'AP Dhillon, Gurinder Gill',
+      album: 'Hidden Gems',
       imageUrl: 'https://c.saavncdn.com/890/Excuses-English-2021-20210930112054-500x500.jpg',
-      duration: '3:45',
+      duration: '2:56',
       isNFT: true
     },
     {
       id: '2',
-      title: 'Midnight Groove',
-      artist: 'Urban Echoes',
-      album: 'City Lights',
-      imageUrl: '/album-covers/midnight.jpg',
-      duration: '4:12',
+      title: 'Raataan Lambiyan',
+      artist: 'Jubin Nautiyal, Asees Kaur',
+      album: 'Shershaah',
+      imageUrl: 'https://c.saavncdn.com/222/Raataan-Lambiyan-From-Shershaah--Hindi-2021-20210729181107-500x500.jpg',
+      duration: '3:50',
       isNFT: false
     },
     {
       id: '3',
-      title: 'Digital Horizon',
-      artist: 'Synth Collective',
-      album: 'Future Waves',
-      imageUrl: '/album-covers/digital.jpg',
-      duration: '3:58',
+      title: 'Brown Munde',
+      artist: 'AP Dhillon, Gurinder Gill, Proof',
+      album: 'Brown Munde',
+      imageUrl: 'https://i.scdn.co/image/ab67616d0000b273d9a129c4a656a55afff2ca02',
+      duration: '4:15',
       isNFT: true
     },
     {
       id: '4',
-      title: 'Astral Journey',
-      artist: 'Nebula Dreams',
-      album: 'Cosmic Voyager',
-      imageUrl: '/album-covers/astral.jpg',
-      duration: '5:21',
+      title: 'Kesariya',
+      artist: 'Arijit Singh',
+      album: 'Brahmastra',
+      imageUrl: 'https://c.saavncdn.com/191/Kesariya-From-Brahmastra-Hindi-2022-20220717092820-500x500.jpg',
+      duration: '4:28',
       isNFT: true
     },
   ];
@@ -109,37 +109,37 @@ const Library: NextPage = () => {
   const topAlbums: Album[] = [
     {
       id: '1',
-      title: 'Celestial Journey',
-      artist: 'Cosmic Harmony',
-      imageUrl: '/album-covers/celestial.jpg',
+      title: 'Hidden Gems',
+      artist: 'AP Dhillon',
+      imageUrl: 'https://i.scdn.co/image/ab67616d0000b273852d4ace5ba8cf082b045c38',
       isNFT: true
     },
     {
       id: '2',
-      title: 'City Lights',
-      artist: 'Urban Echoes',
-      imageUrl: '/album-covers/city.jpg',
+      title: 'Shershaah',
+      artist: 'Various Artists',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/en/3/32/Shershaah_soundtrack.jpg',
       isNFT: false
     },
     {
       id: '3',
-      title: 'Future Waves',
-      artist: 'Synth Collective',
-      imageUrl: '/album-covers/future.jpg',
+      title: 'Kabir Singh',
+      artist: 'Sachet-Parampara, Arijit Singh',
+      imageUrl: 'https://c.saavncdn.com/807/Kabir-Singh-Hindi-2019-20240131131003-500x500.jpg',
       isNFT: true
     },
     {
       id: '4',
-      title: 'Galactic Bass',
-      artist: 'Space Beats',
-      imageUrl: '/album-covers/galactic.jpg',
+      title: 'Diljit Dosanjh Hits',
+      artist: 'Diljit Dosanjh',
+      imageUrl: 'https://i.scdn.co/image/ab67616d0000b2737bf7ee8f80d6b528499cfb2b',
       isNFT: true
     },
     {
       id: '5',
-      title: 'Neon Dreams',
-      artist: 'Digital Pulse',
-      imageUrl: '/album-covers/neon.jpg',
+      title: 'Not by Force',
+      artist: 'Karan Aujla',
+      imageUrl: 'https://dailymusicroll.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/08/12163658/Uncommon-Facts-About-The-Famous-Punjabi-Singer-Karan-Aujla-e1723460955815-1024x635.webp',
       isNFT: false
     }
   ];
@@ -147,30 +147,30 @@ const Library: NextPage = () => {
   const playlists: Playlist[] = [
     {
       id: '1',
-      title: 'Chill Study Vibes',
-      description: 'Perfect for focused study sessions',
-      imageUrl: '/playlists/study.jpg',
+      title: 'Punjabi Party Hits',
+      description: 'Top Bhangra and party songs',
+      imageUrl: 'https://i.scdn.co/image/ab67706f00000002296c17a0211e5380edfa954d',
       songCount: 24
     },
     {
       id: '2',
-      title: 'Morning Meditation',
-      description: 'Start your day with calm',
-      imageUrl: '/playlists/meditation.jpg',
+      title: 'Bollywood Romance',
+      description: 'Romantic Hindi hits',
+      imageUrl: 'https://i.scdn.co/image/ab67616d0000b273837703447a37700546b74b6c',
       songCount: 15
     },
     {
       id: '3',
-      title: 'Workout Intensity',
-      description: 'Keep the energy high',
-      imageUrl: '/playlists/workout.jpg',
+      title: 'Desi Workout',
+      description: 'High energy beats for gym',
+      imageUrl: 'https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da843e0f6773ddad2e638fc0647d',
       songCount: 32
     },
     {
       id: '4',
-      title: 'Coding Sessions',
-      description: 'Focus-enhancing beats',
-      imageUrl: '/playlists/coding.jpg',
+      title: 'Sufi Classics',
+      description: 'Soulful Sufi tracks',
+      imageUrl: 'https://i.scdn.co/image/ab67616d00001e02129264d32b55f7bf0fd97032',
       songCount: 28
     }
   ];
@@ -178,39 +178,39 @@ const Library: NextPage = () => {
   const artists: Artist[] = [
     {
       id: '1',
-      name: 'Cosmic Harmony',
-      imageUrl: '/artists/cosmic.jpg',
-      followers: '145K'
+      name: 'Arijit Singh',
+      imageUrl: 'https://i.scdn.co/image/ab6761610000e5eb5ba2d75eb08a2d672f9b69b7',
+      followers: '3.2M'
     },
     {
       id: '2',
-      name: 'Urban Echoes',
-      imageUrl: '/artists/urban.jpg',
-      followers: '92K'
+      name: 'AP Dhillon',
+      imageUrl: 'https://i.scdn.co/image/ab6761610000e5ebfb505b37709fa86cfd8f55b3',
+      followers: '1.8M'
     },
     {
       id: '3',
-      name: 'Synth Collective',
-      imageUrl: '/artists/synth.jpg',
-      followers: '210K'
+      name: 'Diljit Dosanjh',
+      imageUrl: 'https://i.scdn.co/image/ab6761610000e5ebfc043bea91ac91c222d235c9',
+      followers: '2.5M'
     },
     {
       id: '4',
-      name: 'Nebula Dreams',
-      imageUrl: '/artists/nebula.jpg',
-      followers: '78K'
+      name: 'Aditya Rikhari',
+      imageUrl: 'https://i.scdn.co/image/ab6761610000e5eb482c8b15eab378fdebc5e05e',
+      followers: '1.1M'
     },
     {
       id: '5',
-      name: 'Digital Pulse',
-      imageUrl: '/artists/digital.jpg',
-      followers: '183K'
+      name: 'Honey Singh',
+      imageUrl: 'https://i.scdn.co/image/ab6761610000e5ebbc7e4fffd515b47ff1ebbc1f',
+      followers: '3.6M'
     },
     {
       id: '6',
-      name: 'Space Beats',
-      imageUrl: '/artists/space.jpg',
-      followers: '126K'
+      name: 'Karan Aujla',
+      imageUrl: 'https://i.scdn.co/image/ab6761610000e5eb2a354a64d9c5c602db0be2a4',
+      followers: '1.2M'
     }
   ];
 
@@ -230,15 +230,7 @@ const Library: NextPage = () => {
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold">Library</h1>
             
-            <div className="flex gap-4">
-              <button className="bg-[#7c3aed] text-white px-4 py-2 rounded-full flex items-center">
-                <Plus size={16} className="mr-2" />
-                Create Collection
-              </button>
-              <button className="bg-[#7c3aed] text-white px-4 py-2 rounded-full flex items-center">
-                Browse Marketplace
-              </button>
-            </div>
+            
           </div>
           
           {/* Search Bar */}
@@ -252,38 +244,7 @@ const Library: NextPage = () => {
           </div>
           
           {/* Filters */}
-          <div className="flex gap-3 mb-8">
-            <button 
-              className={`px-4 py-2 rounded-full ${activeFilter === 'all' ? 'bg-[#7c3aed] text-white' : 'bg-[#222222] text-gray-300 hover:bg-[#333333]'}`}
-              onClick={() => setActiveFilter('all')}
-            >
-              All
-            </button>
-            <button 
-              className={`px-4 py-2 rounded-full ${activeFilter === 'albums' ? 'bg-[#7c3aed] text-white' : 'bg-[#222222] text-gray-300 hover:bg-[#333333]'}`}
-              onClick={() => setActiveFilter('albums')}
-            >
-              Albums
-            </button>
-            <button 
-              className={`px-4 py-2 rounded-full ${activeFilter === 'playlists' ? 'bg-[#7c3aed] text-white' : 'bg-[#222222] text-gray-300 hover:bg-[#333333]'}`}
-              onClick={() => setActiveFilter('playlists')}
-            >
-              Playlists
-            </button>
-            <button 
-              className={`px-4 py-2 rounded-full ${activeFilter === 'artists' ? 'bg-[#7c3aed] text-white' : 'bg-[#222222] text-gray-300 hover:bg-[#333333]'}`}
-              onClick={() => setActiveFilter('artists')}
-            >
-              Artists
-            </button>
-            <button 
-              className={`px-4 py-2 rounded-full ${activeFilter === 'nft' ? 'bg-[#7c3aed] text-white' : 'bg-[#222222] text-gray-300 hover:bg-[#333333]'}`}
-              onClick={() => setActiveFilter('nft')}
-            >
-              NFT Collection
-            </button>
-          </div>
+          
           
           {/* Recently Played Section */}
           <section className="mb-10">
@@ -309,7 +270,7 @@ const Library: NextPage = () => {
                     <td className="py-3">
                       <div className="flex items-center">
                         <div className="relative w-10 h-10 mr-4">
-                          <div className="bg-gray-700 rounded w-10 h-10"></div>
+                          <Image src={song.imageUrl} alt={song.title} width={40} height={40} className="rounded" />
                           {song.isNFT && (
                             <div className="absolute top-0 right-0 bg-[#7c3aed] text-xs px-1 rounded">NFT</div>
                           )}
@@ -349,7 +310,9 @@ const Library: NextPage = () => {
               {topAlbums.map(album => (
                 <div key={album.id} className="bg-[#1a1a1a] rounded-lg overflow-hidden hover:bg-[#222222] transition-transform hover:-translate-y-1">
                   <div className="relative">
-                    <div className="aspect-square bg-gray-800"></div>
+                    <div className="aspect-square relative">
+                      <Image src={album.imageUrl} alt={album.title} layout="fill" objectFit="cover" />
+                    </div>
                     {album.isNFT && (
                       <div className="absolute top-2 right-2 bg-[#7c3aed] bg-opacity-80 text-white text-xs px-2 py-1 rounded">NFT</div>
                     )}
@@ -379,7 +342,9 @@ const Library: NextPage = () => {
               {playlists.map(playlist => (
                 <div key={playlist.id} className="bg-[#1a1a1a] rounded-lg overflow-hidden hover:bg-[#222222] transition-transform hover:-translate-y-1">
                   <div className="relative">
-                    <div className="aspect-square bg-gray-800"></div>
+                    <div className="aspect-square relative">
+                      <Image src={playlist.imageUrl} alt={playlist.title} layout="fill" objectFit="cover" />
+                    </div>
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                       <div className="bg-[#7c3aed] bg-opacity-80 rounded-full w-12 h-12 flex items-center justify-center">
                         <Play size={24} fill="white" />
@@ -407,7 +372,9 @@ const Library: NextPage = () => {
               {artists.map(artist => (
                 <div key={artist.id} className="text-center">
                   <div className="relative mx-auto w-full aspect-square mb-3">
-                    <div className="w-full h-full rounded-full bg-gray-800"></div>
+                    <div className="w-full h-full rounded-full relative overflow-hidden">
+                      <Image src={artist.imageUrl} alt={artist.name} layout="fill" objectFit="cover" />
+                    </div>
                   </div>
                   <h3 className="font-medium truncate">{artist.name}</h3>
                   <p className="text-sm text-gray-400">{artist.followers} followers</p>
@@ -422,7 +389,9 @@ const Library: NextPage = () => {
       <div className="fixed bottom-0 left-0 right-0 bg-[#111111] border-t border-[#222222] py-3 px-5 flex items-center">
         {/* Current Song Info */}
         <div className="flex items-center w-1/4">
-          <div className="w-12 h-12 bg-gray-800 rounded mr-3"></div>
+          <div className="w-12 h-12 relative rounded overflow-hidden mr-3">
+            <Image src={currentSong.imageUrl} alt={currentSong.title} layout="fill" objectFit="cover" />
+          </div>
           <div>
             <h4 className="font-medium text-sm">{currentSong.title}</h4>
             <p className="text-xs text-gray-400">{currentSong.artist}</p>
