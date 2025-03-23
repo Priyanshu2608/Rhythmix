@@ -12,8 +12,6 @@ import { mockNFTs } from "@/constants/mock-nfts"
 import { mockMusic } from "@/constants/mock-music"
 
 export default function MarketplacePage() {
-  const { account, connect, disconnect, isConnecting } = useWallet()
-  const [activeTab, setActiveTab] = useState("music")
 
   return (
     <div className="flex flex-col p-6 space-y-6">
