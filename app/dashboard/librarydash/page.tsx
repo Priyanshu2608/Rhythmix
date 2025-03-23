@@ -61,7 +61,7 @@ const Library: NextPage = () => {
     title: 'Ethereal Dreams',
     artist: 'Cosmic Harmony',
     album: 'Celestial Journey',
-    imageUrl: '/album-covers/ethereal.jpg',
+    imageUrl: 'https://c.saavncdn.com/890/Excuses-English-2021-20210930112054-500x500.jpg',
     duration: '3:45',
     isNFT: true
   });
@@ -70,10 +70,10 @@ const Library: NextPage = () => {
   const recentlyPlayed: Song[] = [
     {
       id: '1',
-      title: 'Ethereal Dreams',
-      artist: 'Cosmic Harmony',
-      album: 'Celestial Journey',
-      imageUrl: '/album-covers/ethereal.jpg',
+      title: 'Excuses',
+      artist: 'AP Dhillon',
+      album: 'Excuses',
+      imageUrl: 'https://c.saavncdn.com/890/Excuses-English-2021-20210930112054-500x500.jpg',
       duration: '3:45',
       isNFT: true
     },

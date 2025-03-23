@@ -1,62 +1,70 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { PlayIcon, HeartIcon, MoreHorizontalIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
+"use client"
 
-interface MusicCardProps {
-  track: {
-    id: string
-    title: string
-    artist: string
-    cover: string
-    price: string
-    sales?: number
-  }
-  showStats?: boolean
-  className?: string
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Heart } from "lucide-react"
+import { toast } from "@/hooks/use-toast"
+import { Badge } from "@/components/ui/badge"
+
+interface MusicTrack {
+  id: string
+  title: string
+  artist: string
+  genre: string
+  image: string
+  price: string
+  language: string
 }
 
-export function MusicCard({ track, showStats = false, className }: MusicCardProps) {
+interface MusicCardProps {
+  track: MusicTrack
+  account: string | null
+}
+
+export function MusicCard({ track, account }: MusicCardProps) {
+  const router = useRouter()
+  const [isFavorite, setIsFavorite] = useState(false)
+
+  const handleBuyMusic = () => {
+    if (!account) {
+      toast({
+        title: "Wallet not connected",
+        description: "Please connect your wallet to purchase this track",
+        variant: "destructive",
+      })
+      return
+    }
+
+    // Redirect to payment page with music details
+    router.push(
+      `/dashboard/marketplace/payment?type=music&id=${track.id}&price=${track.price}&name=${encodeURIComponent(track.title)}&artist=${encodeURIComponent(track.artist)}`,
+    )
+  }
+
   return (
-    <Card className={cn("overflow-hidden transition-all hover:shadow-md", className)}>
-      <div className="relative aspect-square overflow-hidden group">
-        <img
-          src={track.cover || "/placeholder.svg"}
-          alt={track.title}
-          className="object-cover w-full h-full transition-transform group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-          <Button size="icon" variant="secondary" className="rounded-full">
-            <PlayIcon className="h-5 w-5" />
-          </Button>
-          <Button size="icon" variant="secondary" className="rounded-full">
-            <HeartIcon className="h-5 w-5" />
-          </Button>
+    <Card className="overflow-hidden">
+      <CardHeader className="p-0">
+        <div className="relative aspect-square">
+          <Image src={track.image || "/placeholder.svg"} alt={track.title} fill className="object-cover" />
+          <Badge className="absolute top-2 right-2 bg-black/70 hover:bg-black/70">{track.price} ETH</Badge>
+          <Badge className="absolute top-2 left-2 bg-primary/80 hover:bg-primary/80">{track.language}</Badge>
         </div>
-      </div>
+      </CardHeader>
       <CardContent className="p-4">
-        <div className="space-y-1">
-          <Link href={`/dashboard/track/${track.id}`} className="font-medium hover:underline line-clamp-1">
-            {track.title}
-          </Link>
-          <Link
-            href={`/dashboard/artist/${track.artist.replace(/\s+/g, "-").toLowerCase()}`}
-            className="text-sm text-muted-foreground hover:underline"
-          >
-            {track.artist}
-          </Link>
-        </div>
+        <h3 className="font-semibold">{track.title}</h3>
+        <p className="text-sm text-muted-foreground">{track.artist}</p>
+        <p className="text-xs text-muted-foreground mt-1">{track.genre}</p>
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex justify-between items-center">
-        <div className="font-medium text-primary">{track.price}</div>
-        {showStats && track.sales !== undefined ? (
-          <div className="text-sm text-muted-foreground">{track.sales} sales</div>
-        ) : (
-          <Button variant="ghost" size="icon">
-            <MoreHorizontalIcon className="h-5 w-5" />
-          </Button>
-        )}
+      <CardFooter className="p-4 pt-0 flex justify-between">
+        <Button onClick={handleBuyMusic} className="w-full">
+          Buy Now
+        </Button>
+        <Button size="icon" variant="ghost" onClick={() => setIsFavorite(!isFavorite)}>
+          <Heart className={`h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
+        </Button>
       </CardFooter>
     </Card>
   )
