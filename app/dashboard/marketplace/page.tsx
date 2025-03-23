@@ -26,12 +26,9 @@ export default function MarketplacePage() {
       </div>
 
       <Tabs defaultValue="music" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="grid w-full md:w-auto grid-cols-2 md:grid-cols-3">
+        <TabsList className="grid w-auto  grid-cols-2 md:grid-cols-2">
           <TabsTrigger value="music">Music</TabsTrigger>
-          <TabsTrigger value="nfts">NFTs</TabsTrigger>
-          <TabsTrigger value="collections" className="hidden md:block">
-            Collections
-          </TabsTrigger>
+          <TabsTrigger className="" value="nfts">NFTs</TabsTrigger>
         </TabsList>
 
         <TabsContent value="music" className="mt-6">

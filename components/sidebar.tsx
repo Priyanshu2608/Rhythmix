@@ -69,12 +69,7 @@ export function Sidebar({ className }: SidebarProps) {
       href: "/dashboard",
       active: pathname === "/dashboard",
     },
-    {
-      label: "Search",
-      icon: SearchIcon,
-      href: "/dashboard/search",
-      active: pathname === "/dashboard/search",
-    },
+    
     {
       label: "Library",
       icon: LibraryIcon,
@@ -97,12 +92,7 @@ export function Sidebar({ className }: SidebarProps) {
       href: "/dashboard/analytics",
       active: pathname === "/dashboard/analytics",
     },
-    {
-      label: "Fans",
-      icon: UsersIcon,
-      href: "/dashboard/fans",
-      active: pathname === "/dashboard/fans",
-    },
+    
   ]
 
   const generalRoutes = [
@@ -112,7 +102,7 @@ export function Sidebar({ className }: SidebarProps) {
       href: "/dashboard/marketplace",
       active: pathname === "/dashboard/marketplace",
     },
-   
+  
   ]
 
   const onNavigation = () => {
@@ -120,7 +110,8 @@ export function Sidebar({ className }: SidebarProps) {
   }
 
   const handleLogout = () => {
-    logout()
+    logout();
+  
   }
 
   const toggleSidebar = () => {
@@ -301,7 +292,7 @@ export function Sidebar({ className }: SidebarProps) {
                 className="w-full justify-start gap-2 bg-primary/5" 
                 asChild
               >
-                <Link href="/dashboard/marketplace">
+                <Link href="/dashboard/upload">
                   <PlusCircleIcon className="h-5 w-5" />
                   Create NFT
                 </Link>
