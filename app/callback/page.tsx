@@ -13,7 +13,7 @@ export default function CallbackPage() {
     const handleCallback = async () => {
       try {
         setStatus("Getting code from URL...");
-        // Get the code from the URL
+ 
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
         const errorParam = urlParams.get("error");
